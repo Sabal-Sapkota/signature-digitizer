@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Signature Digitizer | Turn Photo into Digital Signature</title>
+    <title>Signature Digitizer: Create a Free Handwritten Digital Signature Online</title>
+    <meta name="description" content="Upload a photo of your signature and instantly convert it into a clean, transparent digital signature PNG. Free, fast, and 100% private.">
+    <meta name="keywords" content="digital signature, handwritten signature, signature from photo, transparent signature, free signature maker, online signature generator">
+    <meta name="author" content="Sabal Sapkota">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://sabal-sapkota.github.io/signature-digitizer/">
     <style>
         * {
             box-sizing: border-box;
@@ -102,16 +107,6 @@
             background: #2c6288;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #3a7ca5;
-            color: #1e4668;
-        }
-
-        .btn-outline:hover {
-            background: #e7f0f9;
-        }
-
         .btn:hover {
             background: #0f3450;
             transform: translateY(-1px);
@@ -191,10 +186,6 @@
             -webkit-appearance: none;
         }
 
-        input[type="range"]:focus {
-            outline: none;
-        }
-
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 18px;
@@ -202,7 +193,6 @@
             border-radius: 50%;
             background: #1e4668;
             cursor: pointer;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
         }
 
         .color-row {
@@ -237,7 +227,6 @@
             font-size: 0.8rem;
             text-align: center;
             margin-top: 1rem;
-            color: #2c6e2c;
             background: #e6f4ea;
             display: inline-block;
             padding: 0.2rem 0.8rem;
@@ -277,11 +266,10 @@
 <div class="container">
     <div class="hero">
         <h1>🖊️ Signature Digitizer</h1>
-        <p>Upload a photo of your handwritten signature &nbsp;→&nbsp; instantly transform into a professional digital signature with transparent background.</p>
+        <p>Upload a photo of your handwritten signature → instantly transform into a professional digital signature with transparent background.</p>
     </div>
 
     <div class="card">
-        <!-- Upload zone -->
         <div class="upload-area" id="uploadZone">
             <div class="upload-icon">📸 🖌️</div>
             <p style="font-weight: 500;">Click or drag & drop your signature photo</p>
@@ -291,14 +279,13 @@
         </div>
         <div id="statusMessage" style="text-align:center; margin-bottom:1rem;"></div>
 
-        <!-- Double preview -->
         <div class="grid-2">
             <div class="preview-box">
                 <div class="preview-title">
                     <span>📷 Original signature photo</span>
                     <span class="badge">uploaded</span>
                 </div>
-                <div class="canvas-container" id="originalContainer">
+                <div class="canvas-container">
                     <canvas id="originalCanvas" width="400" height="200" style="max-width:100%; height:auto; background:#fff;"></canvas>
                 </div>
                 <div style="padding: 0.8rem 1rem; font-size:0.75rem; color:#3d6a8f; border-top:1px solid #eef2f8;">
@@ -311,7 +298,7 @@
                     <span>✨ Digital signature (transparent)</span>
                     <span class="badge">ready to use</span>
                 </div>
-                <div class="canvas-container" id="resultContainer">
+                <div class="canvas-container">
                     <canvas id="resultCanvas" width="400" height="200" style="max-width:100%; height:auto;"></canvas>
                 </div>
                 <div style="padding: 0.8rem 1rem; font-size:0.75rem; color:#3d6a8f; border-top:1px solid #eef2f8;">
@@ -320,7 +307,6 @@
             </div>
         </div>
 
-        <!-- Controls -->
         <div class="controls">
             <div class="slider-group">
                 <label>🎚️ Sensitivity (threshold) <span id="thresholdValue">128</span></label>
@@ -358,7 +344,6 @@
 
 <script>
     (function(){
-        // ----- DOM elements
         const fileInput = document.getElementById('fileInput');
         const uploadZone = document.getElementById('uploadZone');
         const selectFileBtn = document.getElementById('selectFileBtn');
@@ -372,7 +357,6 @@
         const downloadBtn = document.getElementById('downloadBtn');
         const statusDiv = document.getElementById('statusMessage');
 
-        // internal state
         let originalImageData = null;
         let originalWidth = 0, originalHeight = 0;
         let currentResultCanvasDisplay = null;
@@ -387,7 +371,6 @@
             }, 3000);
         }
         
-        // ----- load image
         function loadImageFromFile(file) {
             if (!file) return;
             const reader = new FileReader();
@@ -587,15 +570,13 @@
             });
         }
         
-        // ----- Event binding (FIXED: no double file dialog)
         function init() {
             selectFileBtn.addEventListener('click', (e) => {
-                e.stopPropagation();  // PREVENTS BUBBLING TO PARENT UPLOAD ZONE
+                e.stopPropagation();
                 fileInput.click();
             });
             
             uploadZone.addEventListener('click', (e) => {
-                // only trigger if the click target is not the button or inside the button
                 if (!selectFileBtn.contains(e.target)) {
                     fileInput.click();
                 }
@@ -604,7 +585,7 @@
             fileInput.addEventListener('change', (e) => {
                 if (e.target.files && e.target.files[0]) {
                     loadImageFromFile(e.target.files[0]);
-                    fileInput.value = ''; // allow re-upload of same file later
+                    fileInput.value = '';
                 }
             });
             
@@ -619,7 +600,6 @@
             
             updateThresholdLabel();
             
-            // drag & drop
             uploadZone.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 uploadZone.style.backgroundColor = '#eef4fa';
@@ -638,7 +618,6 @@
                 }
             });
             
-            // initial placeholder
             const ctxOrig = originalCanvas.getContext('2d');
             ctxOrig.fillStyle = '#f2f6fa';
             ctxOrig.fillRect(0, 0, originalCanvas.width, originalCanvas.height);
